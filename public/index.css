@@ -1,0 +1,69 @@
+body{
+    background-color: rgb(0, 0, 0);
+}
+.container{
+    display: flex;
+  justify-content: center; 
+  flex-direction: column;  /* centers children horizontally */
+                  /* space between login & register boxes */
+  margin: 0 auto;            /* horizontally centers the container itself if it has a width */
+  width: fit-content;        /* adjust based on child size */
+  padding: 20px;
+  margin-bottom: 2cm;
+  background-color: burlywood;
+}
+h4{
+    color: rgb(74, 74, 125);
+}
+#login{
+    cursor: pointer;
+    background-color: chocolate;
+    padding: 3px 5px;
+    border-radius: 5px;
+}
+#reg{
+    cursor: pointer;
+    background-color: chocolate;
+    padding: 3px 5px;
+    border-radius: 5px;
+
+
+}
+.login{
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+.reg{
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+#result{
+    
+    
+    font-size: small;
+    color: black;
+    text-align: center;
+}
+h1{
+    font-size: 2cm;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+    color: rgb(224, 228, 0);
+}
+#result h1{
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(0, 106, 255);
+
+}
+h3{
+    color: rgb(243, 243, 243);
+    font-size: small;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    
+}
