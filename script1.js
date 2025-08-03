@@ -1,26 +1,38 @@
 const express= require('express');
 const app=express();
-const fs= require('fs');
-const path=require('path');
-const jwt=require('jsonwebtoken');
-const { json } = require('stream/consumers');
-const SecretKey='ifiovionvoin0irhnrio';
-const redis=require('ioredis');
+const path = require('path');
+const dotenv= require('dotenv');
+dotenv.config();
 
-const redisClient = new redis({
-    host: '127.0.0.1',
-    port: 6379,
-    // password: 'your_password_if_any',
-  });
+const mongoconnect = require('./Config/db');
+mongoconnect();
+
+const Auth_Router = require('./Routers/auth_routers');
+const Dashboard_Router = require('./Routers/dashboard_routers')
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname , 'public')))
-const port= 4000;
-app.get('/',(req, res)=>{
-res.send('<h2>helooooo</h2>');
-})
+
+  app.use('/api/auth', Auth_Router);
+  app.use('/api/auth', Auth_Router);
+  app.use('/api/auth', Auth_Router);
+  app.use('/api/dashboard', Dashboard_Router);
+  app.use('/api/dashboard', Dashboard_Router);
+
+  const port = process.env.port || 6000;
+
+  app.listen(port,()=>{
+    console.log(`sever is running ${port}`);
+    })
+
+ //app.get('/',(req, res)=>{
+//res.send('<h2>helooooo</h2>');
+//})
+/*
 app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 })
+
 app.post('/api/reg',(req,res)=>{
     const username= req.body.username;
     const password=req.body.password;
@@ -59,7 +71,9 @@ app.post('/api/reg',(req,res)=>{
         })  
 })
 })
+*/
 
+/*
 app.post('/api/login',(req,res)=>{
     const username=req.body.username;
     const password=req.body.password;
@@ -85,19 +99,18 @@ app.post('/api/login',(req,res)=>{
 
     })
 })
-app.get('/dashboard', (req,res)=>{
+*/
 
+
+/*app.get('/dashboard', (req,res)=>{
+   console.log(`yes it is camed to sevring page`);
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
- })
+ })*/
 
 
- const tokenblacklist= async(req,res,next)=>{
+ /*const tokenblacklist= async(req,res,next)=>{
     try{
-
-    
-    const token = req.headers['authorization']?.split(' ')[1];
-
-    
+       const token = req.headers['authorization']?.split(' ')[1];
     if(!token)
     {
         return res.status(401).json({ message: 'No token provided, please login again.' });
@@ -118,37 +131,41 @@ catch (err) {
 
 };
 
+*/
 
-app.get('/api/dashboard', authentication , tokenblacklist,(req,res)=>{
+
+
+
+
+ /* app.get('/api/dashboard', authentication , tokenblacklist,(req,res)=>{
    
-    
-    res.json({message:'', user:req.user});
+    res.json({message:'', user:req.user.username});
 })
+/*
 
 function authentication(req, res,next)
 {
-    
     const token = req.headers['authorization']?.split(' ')[1];
-
-    
     if(!token)
     {
         return res.status(401).json({ message: 'No token provided, please login again.' });
     }
     jwt.verify(token, SecretKey,(err, decoded)=>{
-       
         if(err)
         {
             return res.status(403).json({ message: 'Invalid token, please login again.' });
         }
-        
         req.user=decoded;
+       
         console.log(req.user.username);
         next();
     })
 
 }
- app.post('/api/logout',(req,res)=>{
+    */
+ 
+
+ /*app.post('/api/logout',(req,res)=>{
     const token = req.headers['authorization']?.split(' ')[1];
    
     
@@ -169,6 +186,8 @@ function authentication(req, res,next)
     })
 
  })
+ 
+ /*
   app.post('/api/feedback',(req,res)=>{
     const username= req.body.username;
    // console.log(req.body);
@@ -191,7 +210,7 @@ if (user) {
         res.send('<h4> error in regsting the username ad password to data file</h4>');
     }
    return res.json({message:'Thank you for the feedback'});
-})
+}) 
   
 } else {
   console.log("User not found.");
@@ -200,10 +219,4 @@ if (user) {
 
   })
 
-
-
-
-app.listen(port,()=>{
-    
-    console.log(`sever is running ${port}`);
-    })
+  */

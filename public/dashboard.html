@@ -82,14 +82,18 @@
     <button id="logout"> Logout</button>
 <div  id="feedback_result"> </div>
 <script>
+
+
 const token=localStorage.getItem('jwt');
+console.log(`tokeen  ${token}`);
     if(!token)
 {
-    console.log('88888888888');
+     console.log('No token, redirecting...home page');
+
     window.location.href='/';
 }
 
-    axios.get('/api/dashboard', {
+    axios.get('/api/dashboard/getdashboard', {
         headers: {
      'Content-Type': 'application/json',
     'authorization':`Bearer ${token}`  // You can name this anything, like 'x-access-token' or just 'auth'
@@ -97,9 +101,10 @@ const token=localStorage.getItem('jwt');
     })
     .then(response=>{
     const user=response.data.user;
-    localStorage.setItem('username', user.username);
+    console.log('userrrrrr' , user, response.data);
+    localStorage.setItem('username', user);
     
-     document.getElementById('result').innerHTML=`<pre><h1>${response.data.message} ${user.username}</h1></pre>`
+     document.getElementById('result').innerHTML=`<pre><h1>${response.data.message} ${user}</h1></pre>`
     })
     .catch(err=>{
        
@@ -108,31 +113,27 @@ const token=localStorage.getItem('jwt');
 
 document.getElementById('logout').addEventListener('click',()=>{
     const token=localStorage.getItem('jwt');
-    
     if(!token)
 {
-    
     window.location.href='/';
 }
-    axios.post('/api/logout',{},{ headers:{'Content-Type':'application/json', 'Authorization':`Bearer ${token}`}})
-   
+console.log('tojennnnnn', token, '----');
+    axios.post('/api/auth/logout', {} ,{ headers:{'Content-Type':'application/json', 'Authorization':`Bearer ${token}`}})
     .then(response=>{
-
+        console.log('logouttt sudccefulyyyyyyyyyyyyyy');
         window.location.href='/';
-
-
     })
     .catch(err=>{
-        console.error('logout failedddddddddddddddd', err);
-
+        console.error('logout failedddddddddddddddd', err.response.data);
     })
    
 })
 document.getElementById('Submit').addEventListener('click',()=>{
-    const username=localStorage.getItem('username');
-    console.log('JKVJVu',username);
     const feedback_data=document.getElementById('feedback').value;
-    axios.post('/api/feedback',{ username,feedback_data},{headers:{'Content-Type':'application/json'}})
+    axios.post('/api/dashboard/feedback',
+    {feedback_data},
+    {headers: {
+        'Content-Type':'application/json', 'authorization':`Bearer ${token}`}})
     .then(response=>{
         document.getElementById('feedback_result').innerHTML=`<pre> <h2> ${response.data.message}!</h2></pre>`
         document.getElementById('feedback').value='';
